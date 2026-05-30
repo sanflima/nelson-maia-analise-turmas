@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Comparação entre Turmas · Colégio Nelson Maia</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root {
+    --green-dark: #2f5d27;
+    --green: #3f8a2f;
+    --green-soft: #57a447;
+    --red: #e21f25;
+    --red-dark: #b3151a;
+    --orange: #d96b1f;
+    --yellow: #f0b400;
+    --pink: #c43975;
+    --blue: #1d4fa3;
+    --ink: #111;
+    --paper: #ffffff;
+    --muted: #6b6b6b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #ebebeb; color: var(--ink); font-family: "Inter", "Segoe UI", system-ui, sans-serif; }
+  .page {
+    max-width: 1640px;
+    margin: 24px auto;
+    background: var(--paper);
+    border: 3px solid #1a1a1a;
+    border-radius: 10px;
+    padding: 18px 22px 28px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+
+  /* HEADER */
+  .header-bar {
+    background: var(--green-dark);
+    border-radius: 18px;
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    align-items: center;
+    padding: 10px 18px;
+    gap: 14px;
+  }
+  .logo-wrap {
+    width: 90px; height: 90px;
+    border-radius: 50%; background: white;
+    display: grid; place-items: center; overflow: hidden; padding: 4px;
+  }
+  .logo-wrap img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+  .school-plate { background: white; border-radius: 10px; padding: 8px 24px; text-align: center; line-height: 1; }
+  .school-plate .name {
+    font-family: "Arial Black", "Impact", sans-serif;
+    font-weight: 900;
+    font-size: clamp(28px, 4.2vw, 48px);
+    color: #1d3a8a;
+    letter-spacing: 2px;
+    -webkit-text-stroke: 1px #0f1d4a;
+    white-space: nowrap;
+  }
+  .school-plate .city {
+    font-family: "Arial", sans-serif;
+    font-size: 14px; font-weight: 700; color: #1a1a1a; letter-spacing: 1px; margin-top: 4px;
+  }
+  .back-link {
+    background: white; color: var(--green-dark);
+    border-radius: 10px; padding: 12px 18px;
+    font-family: "Arial Black", sans-serif; font-size: 13px;
+    letter-spacing: 1px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 2px solid white;
+  }
+  .back-link:hover { background: rgba(255,255,255,0.85); }
+
+  /* TITLE */
+  .page-title {
+    text-align: center;
+    font-family: "Arial Black", sans-serif;
+    font-size: 36px;
+    letter-spacing: 3px;
+    margin: 22px 0 14px;
+    color: #111;
+  }
+
+  /* YEAR TABS */
+  .year-tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+  .year-tabs button {
+    background: white;
+    border: 2px solid #1a1a1a;
+    border-radius: 14px;
+    padding: 14px 32px;
+    font-family: "Arial Black", sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: #111;
+    transition: all .15s;
+  }
+  .year-tabs button:hover { background: #f1f1f1; }
+  .year-tabs button.active {
+    background: var(--green-dark);
+    color: white;
+    border-color: var(--green-dark);
+  }
+  .year-tabs button .count {
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.95);
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 13px;
+    margin-left: 8px;
+  }
+  .year-tabs button:not(.active) .count {
+    background: rgba(0,0,0,0.06);
+    color: #555;
+  }
+
+  /* SECTION HEADERS */
+  .section-title {
+    font-family: "Arial Black", sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--green-dark);
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--green-dark);
+  }
+  .section-title-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* CRITICAL ANALYSIS FILTER */
+  .crit-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f7f7f7;
+    border: 1px solid #e4e4e4;
+    border-radius: 12px;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .crit-filter label {
+    font-family: "Arial Black", sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #555;
+    white-space: nowrap;
+  }
+  .crit-filter select {
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: "Arial Black", sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: #111;
+    background: white;
+    cursor: pointer;
+    min-width: 260px;
+  }
+  .crit-filter select:focus { outline: 2px solid var(--green); border-color: var(--green); }
+  .crit-filter-hint {
+    font-size: 11px;
+    color: #888;
+    font-weight: 700;
+    font-style: italic;
+  }
+  .crit-card .na-card { opacity: 0.6; }
+  .crit-card .na-msg, .na-card .na-msg {
+    padding: 18px 8px;
+    text-align: center;
+    color: #aaa;
+    font-size: 12px;
+    font-weight: 700;
+    font-style: italic;
+  }
+  .crit-semnota {
+    margin-top: 8px;
+    font-size: 10px;
+    color: #999;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: right;
+  }
+
+  /* OVERVIEW CARDS */
+  .overview {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .ov-card {
+    background: white;
+    border: 2px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+  .ov-card .ov-label {
+    font-family: "Arial Black", sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #555;
+  }
+  .ov-card .ov-num {
+    font-family: "Arial Black", sans-serif;
+    font-size: 38px;
+    line-height: 1.05;
+    color: #111;
+    margin-top: 4px;
+  }
+  .ov-card .ov-sub {
+    font-size: 10px; color: #777; margin-top: 4px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .ov-card.fem .ov-num { color: var(--pink); }
+  .ov-card.mas .ov-num { color: var(--blue); }
+  .ov-card.aprov .ov-num { color: var(--green-dark); }
+  .ov-card.aprov .ov-num small { font-size: 18px; color: var(--green-dark); }
+
+  /* CRITICAL ANALYSIS CARDS */
+  .crit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 14px;
+  }
+  .crit-card {
+    background: white;
+    border: 2px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .crit-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .crit-head .name {
+    font-family: "Arial Black", sans-serif;
+    font-size: 14px;
+    color: #111;
+    letter-spacing: 1px;
+  }
+  .crit-head .sub { font-size: 11px; color: #666; font-weight: 700; }
+  .crit-head .count {
+    background: var(--green-dark);
+    color: white;
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-family: "Arial Black", sans-serif;
+    font-size: 12px;
+  }
+  .crit-bar {
+    display: flex;
+    height: 32px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f4f4f4;
+    margin-bottom: 10px;
+  }
+
+  /* APPROVED / REPROVED ROW */
+  .ap-rp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .ap-rp-item {
+    border-radius: 10px;
+    padding: 8px 12px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "label value" "count value";
+    align-items: center;
+    column-gap: 8px;
+  }
+  .ap-rp-item.ap { background: #e6f4e1; border: 1.5px solid var(--green-soft); }
+  .ap-rp-item.rp { background: #fde8ea; border: 1.5px solid var(--red); }
+  .ap-rp-item .arl {
+    grid-area: label;
+    font-family: "Arial Black", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+  .ap-rp-item .arl span { font-weight: 700; opacity: 0.7; font-size: 9px; }
+  .ap-rp-item.ap .arl { color: var(--green-dark); }
+  .ap-rp-item.rp .arl { color: var(--red-dark); }
+  .ap-rp-item .arv {
+    grid-area: value;
+    font-family: "Arial Black", sans-serif;
+    font-size: 28px;
+    line-height: 1;
+  }
+  .ap-rp-item .arv small { font-size: 14px; }
+  .ap-rp-item.ap .arv { color: var(--green-dark); }
+  .ap-rp-item.rp .arv { color: var(--red); }
+  .ap-rp-item .arn {
+    grid-area: count;
+    font-size: 10px;
+    color: #666;
+    font-weight: 700;
+  }
+  .crit-seg {
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Arial Black", sans-serif;
+    font-size: 11px;
+    color: white;
+    transition: filter .15s;
+    min-width: 0;
+  }
+  .crit-seg.zero { display: none; }
+  .crit-seg.critico { background: var(--red); }
+  .crit-seg.melhorar { background: var(--orange); }
+  .crit-seg.esperado { background: var(--yellow); color: #111; }
+  .crit-seg.superou { background: var(--green-soft); }
+  .crit-legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .crit-leg-item {
+    display: grid;
+    grid-template-columns: 12px 1fr auto auto;
+    gap: 8px;
+    align-items: center;
+    font-size: 11px;
+  }
+  .crit-leg-item .dot { width: 10px; height: 10px; border-radius: 2px; }
+  .crit-leg-item.critico .dot { background: var(--red); }
+  .crit-leg-item.melhorar .dot { background: var(--orange); }
+  .crit-leg-item.esperado .dot { background: var(--yellow); }
+  .crit-leg-item.superou .dot { background: var(--green-soft); }
+  .crit-leg-item .lab {
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .crit-leg-item .num {
+    font-family: "Arial Black", sans-serif;
+    font-size: 13px;
+    color: #111;
+  }
+  .crit-leg-item .pct {
+    font-size: 10px;
+    color: #888;
+    font-weight: 700;
+  }
+
+  /* DISCIPLINE HEATMAP */
+  .heatmap {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border: 2px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 12px;
+  }
+  .heatmap table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 11px;
+    min-width: 600px;
+  }
+  .heatmap th, .heatmap td {
+    padding: 6px 8px;
+    text-align: center;
+    border: 1px solid #f1f1f1;
+  }
+  .heatmap th {
+    font-family: "Arial Black", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: #333;
+    background: #f7f7f7;
+    position: sticky; top: 0;
+  }
+  .heatmap td.disc-name {
+    text-align: left;
+    font-weight: 700;
+    color: #111;
+    white-space: nowrap;
+    background: #fcfcfc;
+  }
+  .heatmap td.na { color: #ccc; font-style: italic; }
+  .heatmap .hm {
+    font-family: "Arial Black", sans-serif;
+    color: white;
+    border-radius: 4px;
+    padding: 4px 6px;
+    display: inline-block;
+    min-width: 36px;
+  }
+
+  /* RANKING */
+  .ranking {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .rank-card {
+    background: white;
+    border: 2px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .rank-card h3 {
+    margin: 0 0 10px 0;
+    font-family: "Arial Black", sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #111;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rank-card.best h3::before { content: "🏆"; }
+  .rank-card.worst h3::before { content: "⚠️"; }
+  .rank-list {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .rank-item {
+    display: grid;
+    grid-template-columns: 24px 1fr 60px 80px;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+  .rank-item:nth-child(odd) { background: #fafafa; }
+  .rank-item .pos {
+    font-family: "Arial Black", sans-serif;
+    font-size: 13px;
+    text-align: center;
+    color: #888;
+  }
+  .rank-item .pos.gold { color: var(--yellow); }
+  .rank-item .pos.silver { color: #999; }
+  .rank-item .pos.bronze { color: #c47a32; }
+  .rank-item .name {
+    font-weight: 700;
+    color: #111;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .rank-item .pct {
+    font-family: "Arial Black", sans-serif;
+    font-size: 14px;
+  }
+  .rank-item .bar {
+    height: 8px;
+    border-radius: 4px;
+    background: #f0f0f0;
+    position: relative;
+    overflow: hidden;
+  }
+  .rank-item .bar-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--green-soft);
+    border-radius: 4px;
+  }
+  .rank-card.worst .rank-item .bar-fill { background: var(--red); }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+    font-size: 14px;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; margin: 0; }
+    .back-link { display: none; }
+    .year-tabs button:not(.active) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header class="header-bar">
+    <div class="logo-wrap"><img src="assets/logo-nm.png" alt="Logo Nelson Maia" /></div>
+    <div class="school-plate">
+      <div class="name">NELSON MAIA</div>
+      <div class="city">PONTO NOVO - BA</div>
+    </div>
+    <a class="back-link" href="Dashboard Nelson Maia.html">← VOLTAR AO DASHBOARD</a>
+  </header>
+
+  <h1 class="page-title">COMPARAÇÃO ENTRE TURMAS</h1>
+
+  <div class="year-tabs" id="year-tabs"></div>
+
+  <main id="year-view"></main>
+</div>
+
+<script src="preset-turmas.js"></script>
+<script src="comparison.js"></script>
+</body>
+</html>
