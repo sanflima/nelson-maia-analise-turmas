@@ -417,6 +417,42 @@
     color: #111;
   }
 
+  /* ===================== COMPARE NAV ===================== */
+  .compare-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin: 0 0 16px;
+  }
+  .compare-nav .cn-label {
+    font-family: "Arial Black", sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #777;
+    white-space: nowrap;
+  }
+  .compare-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border: 2px solid #1a1a1a;
+    border-radius: 999px;
+    padding: 7px 20px;
+    font-family: "Arial Black", sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    color: #111;
+    text-decoration: none;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .compare-nav a:hover {
+    background: var(--green-dark);
+    color: white;
+    border-color: var(--green-dark);
+  }
+
   /* ===================== BAR CHART ===================== */
   .chart {
     width: 100%;
@@ -840,6 +876,14 @@
   </section>
 
   <h1 class="disc-title">DISCIPLINAS</h1>
+
+  <!-- COMPARE NAV -->
+  <div class="compare-nav">
+    <span class="cn-label">COMPARAR TURMAS:</span>
+    <a href="Comparação entre Turmas.html?ano=1">📊 1° ANO</a>
+    <a href="Comparação entre Turmas.html?ano=2">📊 2° ANO</a>
+    <a href="Comparação entre Turmas.html?ano=3">📊 3° ANO</a>
+  </div>
 
   <!-- BAR CHART -->
   <div class="chart">

@@ -97,10 +97,13 @@ function computeDiscApproval(turma) {
 function render() {
   const groups = groupTurmasByYear();
   const tabsEl = document.getElementById('year-tabs');
+  const urlYear = parseInt(new URLSearchParams(location.search).get('ano'), 10) || 1;
+  const initialYear = [1,2,3].includes(urlYear) ? urlYear : 1;
+
   let html = '';
   for (const y of [1,2,3]) {
     const n = groups[y].length;
-    html += `<button data-year="${y}" ${y===1?'class="active"':''}>${y}° ANO <span class="count">${n}</span></button>`;
+    html += `<button data-year="${y}" ${y===initialYear?'class="active"':''}>${y}° ANO <span class="count">${n}</span></button>`;
   }
   tabsEl.innerHTML = html;
   tabsEl.querySelectorAll('button').forEach(b => {
@@ -110,7 +113,7 @@ function render() {
       renderYear(parseInt(b.dataset.year, 10), groups[parseInt(b.dataset.year, 10)]);
     });
   });
-  renderYear(1, groups[1]);
+  renderYear(initialYear, groups[initialYear]);
 }
 
 function renderYear(year, turmas) {
