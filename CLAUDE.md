@@ -12,7 +12,7 @@ Totalmente client-side (HTML + JS puro, sem backend), roda direto no navegador.
 
 ```
 Analise das turmas/
-├── Dashboard Nelson Maia.html     # Página principal — dashboard por turma
+├── index.html                     # Página principal — dashboard por turma
 ├── Comparação entre Turmas.html   # Página de comparação entre turmas / anos
 ├── dashboard.js                   # Lógica do dashboard (state, render, PDF import)
 ├── comparison.js                  # Lógica da comparação (bandas, heatmap, ranking)
