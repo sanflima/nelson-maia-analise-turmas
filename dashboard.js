@@ -110,6 +110,7 @@ function renderHeader() {
   document.getElementById("school-city").textContent = state.schoolCity;
   document.getElementById("nte-badge").textContent = state.nte;
   document.getElementById("total-num").textContent = t.total;
+  renderTurmaYearTabs();
 
   renderGenderFilter();
   renderGenderPanel();
@@ -163,10 +164,38 @@ document.getElementById("gender-filter").addEventListener("change", renderGender
 /* ============================================================
    TURMA MENU
 ============================================================ */
+let turmaMenuYearFilter = null;
+
+function turmaYear(t) {
+  const match = String(t?.label || "").trim().match(/^([123])/);
+  return match ? match[1] : "";
+}
+
+function renderTurmaYearTabs() {
+  const tabs = document.getElementById("turma-year-tabs");
+  if (!tabs) return;
+  if (!turmaMenuYearFilter) {
+    turmaMenuYearFilter = turmaYear(currentTurma()) || "1";
+  }
+  tabs.querySelectorAll(".turma-year-tab").forEach(el => {
+    el.classList.toggle("active", el.getAttribute("data-year") === turmaMenuYearFilter);
+  });
+}
+
 function renderTurmaMenu() {
   const menu = document.getElementById("turma-menu");
+  if (!turmaMenuYearFilter) {
+    turmaMenuYearFilter = turmaYear(currentTurma()) || "1";
+  }
+  renderTurmaYearTabs();
+
+  const filteredTurmas = Object.entries(state.turmas).filter(([, t]) => {
+    const year = turmaYear(t);
+    return !year || year === turmaMenuYearFilter;
+  });
+
   let html = "";
-  for (const [key, t] of Object.entries(state.turmas)) {
+  for (const [key, t] of filteredTurmas) {
     const active = key === state.currentKey ? " active" : "";
     html += `<button class="menu-item${active}" data-key="${escapeAttr(key)}">
       <div>
@@ -211,6 +240,7 @@ function renderTurmaMenu() {
 }
 
 function openTurmaMenu() {
+  turmaMenuYearFilter = turmaYear(currentTurma()) || turmaMenuYearFilter || "1";
   renderTurmaMenu();
   document.getElementById("turma-menu").classList.add("open");
 }
@@ -224,8 +254,16 @@ document.getElementById("turma-card").addEventListener("click", (e) => {
   if (menu.classList.contains("open")) closeTurmaMenu();
   else openTurmaMenu();
 });
+document.getElementById("turma-year-tabs").querySelectorAll(".turma-year-tab").forEach(el => {
+  el.addEventListener("click", (e) => {
+    e.stopPropagation();
+    turmaMenuYearFilter = el.getAttribute("data-year");
+    renderTurmaMenu();
+    document.getElementById("turma-menu").classList.add("open");
+  });
+});
 document.addEventListener("click", (e) => {
-  if (!e.target.closest(".turma-dropdown")) closeTurmaMenu();
+  if (!e.target.closest(".turma-selector")) closeTurmaMenu();
 });
 
 /* ============================================================

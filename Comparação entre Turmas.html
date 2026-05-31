@@ -62,14 +62,29 @@
     font-size: 14px; font-weight: 700; color: #1a1a1a; letter-spacing: 1px; margin-top: 4px;
   }
   .back-link {
-    background: white; color: var(--green-dark);
-    border-radius: 10px; padding: 12px 18px;
-    font-family: "Arial Black", sans-serif; font-size: 13px;
-    letter-spacing: 1px; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 6px;
-    border: 2px solid white;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 2px solid rgba(255,255,255,.55);
+    color: #fff;
+    padding: 7px 15px;
+    border-radius: 7px;
+    font-family: "Arial Black", sans-serif;
+    font-size: 12px;
+    letter-spacing: .4px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .18s;
+    box-shadow: 0 3px 8px rgba(0,0,0,.3);
   }
-  .back-link:hover { background: rgba(255,255,255,0.85); }
+  .back-link:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,.4);
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,.9);
+    filter: brightness(1.13);
+  }
+  .back-link.btn-dashboard   { background: #2f5d27; }
+  .back-link.btn-boletim     { background: #c0710d; }
 
   /* TITLE */
   .page-title {
@@ -495,7 +510,10 @@
       <div class="name">NELSON MAIA</div>
       <div class="city">PONTO NOVO - BA</div>
     </div>
-    <a class="back-link" href="Dashboard Nelson Maia.html">← VOLTAR AO DASHBOARD</a>
+    <div style="display:flex;gap:8px;align-items:center">
+      <a class="back-link btn-dashboard" href="Dashboard Nelson Maia.html">Dashboard</a>
+      <a class="back-link btn-boletim" href="Boletim Bimestral.html">Boletim</a>
+    </div>
   </header>
 
   <h1 class="page-title">COMPARAÇÃO ENTRE TURMAS</h1>

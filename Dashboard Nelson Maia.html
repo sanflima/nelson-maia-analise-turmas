@@ -36,11 +36,17 @@
   /* ===================== HEADER ===================== */
   .header {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 300px 1fr;
     gap: 14px;
-    align-items: stretch;
+      display: inline-flex;
   }
 
+  .turma-selector {
+    display: grid;
+    grid-template-columns: 240px 46px;
+    gap: 8px;
+    align-items: stretch;
+  }
   .turma-dropdown {
     position: relative;
   }
@@ -56,7 +62,7 @@
     align-items: center;
     justify-content: center;
     padding: 14px 12px;
-    text-align: center;
+    display: inline-flex;
     font-weight: 800;
     letter-spacing: 0.5px;
     font-size: 22px;
@@ -80,7 +86,7 @@
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
-    min-width: 280px;
+    min-width: 300px;
     background: white;
     border: 2px solid #1a1a1a;
     border-radius: 12px;
@@ -90,6 +96,35 @@
     display: none;
   }
   .turma-menu.open { display: block; }
+  .turma-year-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .turma-selector .turma-year-tabs {
+    height: 100%;
+  }
+  .turma-year-tab {
+    width: 46px;
+    min-height: 0;
+    flex: 1;
+    border: 2px solid #1a1a1a;
+    border-radius: 9px;
+    background: white;
+    color: #111;
+    cursor: pointer;
+    font-family: "Arial Black", sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .turma-year-tab:hover,
+  .turma-year-tab.active {
+    background: var(--green-dark);
+    color: white;
+    border-color: var(--green-dark);
+  }
+  .turma-menu-list { min-width: 0; }
   .turma-menu .menu-item {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -138,7 +173,7 @@
     background: var(--green-dark);
     border-radius: 18px;
     display: grid;
-    grid-template-columns: 110px 1fr 140px auto;
+    grid-template-columns: 110px 1fr auto;
     align-items: center;
     padding: 10px 18px;
     gap: 14px;
@@ -175,8 +210,7 @@
   .logo-wrap img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
 
   .school-plate {
-    background: white;
-    border-radius: 10px;
+    Background transparent
     padding: 8px 18px;
     text-align: center;
     line-height: 1;
@@ -185,31 +219,33 @@
     font-family: "Arial Black", "Impact", sans-serif;
     font-weight: 900;
     font-size: clamp(28px, 4.2vw, 52px);
-    color: #1d3a8a;
+    color: #ffffff;
     letter-spacing: 2px;
-    -webkit-text-stroke: 1px #0f1d4a;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.35);
     white-space: nowrap;
   }
   .school-plate .city {
     font-family: "Arial", sans-serif;
     font-size: 16px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: rgba(255,255,255,.85);
     letter-spacing: 1px;
     margin-top: 4px;
   }
 
-  .nte-badge {
-    background: white;
-    border-radius: 10px;
-    padding: 14px 6px;
-    text-align: center;
+  .nte-label {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: "Arial Black", "Impact", sans-serif;
     font-weight: 900;
-    font-size: clamp(20px, 2.4vw, 32px);
+    font-size: clamp(22px, 2.8vw, 44px);
     color: #1d3a8a;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     -webkit-text-stroke: 1px #0f1d4a;
+    text-shadow: 2px 2px 5px rgba(0,0,0,.18);
     white-space: nowrap;
   }
 
@@ -425,6 +461,16 @@
     justify-content: center;
     margin: 0 0 16px;
   }
+  .stats > .compare-nav {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    justify-content: flex-start;
+    margin: 0 0 2px;
+  }
+  .legend { grid-column: 1; grid-row: 2; }
+  .gender-section { grid-column: 2; grid-row: 2; }
+  .total-box { grid-column: 3; grid-row: 2; }
+  .critical { grid-column: 4; grid-row: 1 / span 2; }
   .compare-nav .cn-label {
     font-family: "Arial Black", sans-serif;
     font-size: 12px;
@@ -452,6 +498,32 @@
     color: white;
     border-color: var(--green-dark);
   }
+
+  /* ── Botões de navegação entre páginas ── */
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    border: 2px solid rgba(255,255,255,.55);
+    color: #fff;
+    padding: 7px 15px;
+    border-radius: 7px;
+    font-family: "Arial Black", sans-serif;
+    font-size: 12px;
+    letter-spacing: .4px;
+    cursor: pointer;
+    text-decoration: none;
+      <a class="back-link btn-dashboard" href="Dashboard Nelson Maia.html">Dashboard</a>
+    transition: all .18s;
+    box-shadow: 0 3px 8px rgba(0,0,0,.3);
+  }
+  .nav-btn:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,.4);
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,.9);
+    filter: brightness(1.13);
+  }
+  .nav-btn.btn-comparativo { background: #1d4fa3; }
+  .nav-btn.btn-boletim     { background: #c0710d; }
 
   /* ===================== BAR CHART ===================== */
   .chart {
@@ -765,6 +837,19 @@
   @media (max-width: 1200px) {
     .stats { grid-template-columns: 1fr 1fr; gap: 14px; }
     .stats > * { min-width: 0; }
+    .stats > .compare-nav {
+      grid-column: 1 / -1;
+      grid-row: auto;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .legend,
+    .gender-section,
+    .total-box,
+    .critical {
+      grid-column: auto;
+      grid-row: auto;
+    }
     .disc-title { font-size: 36px; }
   }
   @media print {
@@ -779,12 +864,19 @@
 <div class="page">
   <!-- HEADER -->
   <header class="header">
-    <div class="turma-dropdown">
-      <button class="turma-card" id="turma-card" title="Trocar turma">
-        <span id="turma-text">3°ANO A<br/>INTEGRAL</span>
-        <span class="caret">▼ TROCAR TURMA</span>
-      </button>
-      <div class="turma-menu" id="turma-menu" role="menu"></div>
+    <div class="turma-selector">
+      <div class="turma-dropdown">
+        <button class="turma-card" id="turma-card" title="Trocar turma">
+          <span id="turma-text">3°ANO A<br/>INTEGRAL</span>
+          <span class="caret">▼ TROCAR TURMA</span>
+        </button>
+        <div class="turma-menu" id="turma-menu" role="menu"></div>
+      </div>
+      <div class="turma-year-tabs" id="turma-year-tabs" aria-label="Filtrar turmas por ano">
+        <button class="turma-year-tab" data-year="1" type="button">1°</button>
+        <button class="turma-year-tab" data-year="2" type="button">2°</button>
+        <button class="turma-year-tab" data-year="3" type="button">3°</button>
+      </div>
     </div>
     <div class="header-bar">
       <div class="logo-wrap"><img src="assets/logo-nm.png" alt="Logo Nelson Maia" /></div>
@@ -792,16 +884,21 @@
         <div class="name" id="school-name">NELSON MAIA</div>
         <div class="city" id="school-city">PONTO NOVO - BA</div>
       </div>
-      <div class="nte-badge" id="nte-badge">NTE-25</div>
-      <button class="header-edit-btn" id="open-drawer">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        EDITAR / IMPORTAR
-      </button>
+      <div style="display:flex;gap:8px;align-items:center">
+        <a class="nav-btn btn-comparativo" href="Comparação entre Turmas.html">Comparativo</a>
+        <a class="nav-btn btn-boletim" href="Boletim Bimestral.html">Boletim</a>
+        <button class="header-edit-btn" id="open-drawer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          EDITAR / IMPORTAR
+        </button>
+      </div>
     </div>
   </header>
 
   <!-- STATS ROW -->
   <section class="stats">
+    <div class="nte-label" id="nte-badge">NTE-25</div>
+
     <div class="legend">
       <div class="legend-item">
         <div class="swatch green"></div>
@@ -811,6 +908,13 @@
         <div class="swatch red"></div>
         <div class="legend-label">N° DE ALUNOS<span class="sub">REPROVADOS</span></div>
       </div>
+    </div>
+
+    <div class="compare-nav">
+      <span class="cn-label">COMPARAR TURMAS:</span>
+      <a href="Comparação entre Turmas.html?ano=1">📊 1° ANO</a>
+      <a href="Comparação entre Turmas.html?ano=2">📊 2° ANO</a>
+      <a href="Comparação entre Turmas.html?ano=3">📊 3° ANO</a>
     </div>
 
     <div class="gender-section">
@@ -876,14 +980,6 @@
   </section>
 
   <h1 class="disc-title">DISCIPLINAS</h1>
-
-  <!-- COMPARE NAV -->
-  <div class="compare-nav">
-    <span class="cn-label">COMPARAR TURMAS:</span>
-    <a href="Comparação entre Turmas.html?ano=1">📊 1° ANO</a>
-    <a href="Comparação entre Turmas.html?ano=2">📊 2° ANO</a>
-    <a href="Comparação entre Turmas.html?ano=3">📊 3° ANO</a>
-  </div>
 
   <!-- BAR CHART -->
   <div class="chart">
